@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: inventory
+  labels:
+    app.kubernetes.io/part-of: inventory
+    app.kubernetes.io/component: backstage
+    backstage.io/kubernetes-id: thegoodcorner-inventory
+    app.openshift.io/runtime: quarkus
+spec:
+  selector:
+    matchLabels:
+      app: inventory
+  template:
+    metadata:
+      labels:
+        app: inventory
+    spec:
+      containers:
+        - name: inventory
+          image: image-registry.openshift-image-registry.svc:5000/thegoodcorner-dev/inventory:latest
+          ports:
+            - name: http-8080
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: '300Mi'
+              cpu: '300m'

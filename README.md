@@ -1,0 +1,3 @@
+# inventory-gitops.git-gitops
+
+

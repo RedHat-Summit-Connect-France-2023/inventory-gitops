@@ -1,0 +1,22 @@
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2
+metadata:
+  name: inventory-hpa
+  labels:
+    app.kubernetes.io/part-of: inventory
+    app.kubernetes.io/component: backstage
+    backstage.io/kubernetes-id: thegoodcorner-inventory
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: inventory
+    apiVersion: apps/v1
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 40
